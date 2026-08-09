@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0b0b14;
+  --foreground: #f4f4f7;
+}
+
+.dark {
+  --background: #0b0b14;
+  --foreground: #f4f4f7;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Reusable glassmorphism card surface used across the app */
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-xl shadow-black/20;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-violetLight to-brand-cyan bg-clip-text text-transparent;
+  }
+}
