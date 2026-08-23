@@ -1,31 +1,83 @@
 import type { User } from "@/types";
 
-/**
- * Mock auth service — Week 1 scope has no live backend.
- * These functions simulate network calls so real API logic can be
- * dropped in later without changing how components call them.
- */
+const API_URL = "http://localhost:5000/api/auth";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function mockLogin(email: string, password: string): Promise<User> {
-  // Simulated network delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  return {
-    id: "mock-user-1",
-    fullName: "Demo Student",
-    email,
-    role: "student",
+interface AuthResponse {
+  success: boolean;
+  token?: string;
+  user?: {
+    id: number;
+    full_name: string;
+    email: string;
+    role?: string;
+    role_id?: number;
   };
+  message?: string;
 }
 
-export async function mockSignup(fullName: string, email: string): Promise<User> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
+function mapUser(user: NonNullable<AuthResponse["user"]>): User {
+  const role = user.role?.toLowerCase();
 
   return {
-    id: "mock-user-1",
-    fullName,
-    email,
-    role: "student",
+    id: String(user.id),
+    fullName: user.full_name,
+    email: user.email,
+    role:
+      role === "instructor"
+        ? "instructor"
+        : role === "team lead" || role === "team_lead"
+          ? "team_lead"
+          : role === "admin"
+            ? "admin"
+            : "student",
   };
+}
+export async function login(
+  email: string,
+  password: string
+): Promise<User> {
+  const response = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data: AuthResponse = await response.json();
+
+  if (!response.ok || !data.success || !data.user || !data.token) {
+    throw new Error(data.message || "Login failed.");
+  }
+
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(mapUser(data.user)));
+
+  return mapUser(data.user);
+}
+
+export async function signup(
+  fullName: string,
+  email: string,
+  password: string
+): Promise<User> {
+  const response = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      full_name: fullName,
+      email,
+      password,
+    }),
+  });
+
+  const data: AuthResponse = await response.json();
+
+  if (!response.ok || !data.success || !data.user) {
+    throw new Error(data.message || "Signup failed.");
+  }
+
+  return mapUser(data.user);
 }

@@ -2,7 +2,7 @@ export interface User {
   id: string;
   fullName: string;
   email: string;
-  role: "student" | "instructor" | "admin";
+  role: "student" | "instructor" | "team_lead" | "admin";
 }
 
 export interface Course {
