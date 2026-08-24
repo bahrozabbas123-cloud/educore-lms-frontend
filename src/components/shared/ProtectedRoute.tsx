@@ -13,12 +13,20 @@ export default function ProtectedRoute({
   const router = useRouter();
 
   useEffect(() => {
-    if (auth && !auth.isAuthenticated) {
+    if (!auth || auth.isLoading) {
+      return;
+    }
+
+    if (!auth.isAuthenticated) {
       router.replace("/login");
     }
   }, [auth, router]);
 
-  if (!auth || !auth.isAuthenticated) {
+  if (!auth || auth.isLoading) {
+    return null;
+  }
+
+  if (!auth.isAuthenticated) {
     return null;
   }
 

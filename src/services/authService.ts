@@ -81,3 +81,29 @@ export async function signup(
 
   return mapUser(data.user);
 }
+export async function getCurrentUser(): Promise<User> {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No authentication token found.");
+  }
+
+  const response = await fetch(`${API_URL}/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data: AuthResponse = await response.json();
+
+  if (!response.ok || !data.success || !data.user) {
+    throw new Error(data.message || "Failed to get current user.");
+  }
+
+  const user = mapUser(data.user);
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  return user;
+}
