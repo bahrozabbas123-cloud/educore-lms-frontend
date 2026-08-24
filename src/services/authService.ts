@@ -98,8 +98,14 @@ export async function getCurrentUser(): Promise<User> {
   const data: AuthResponse = await response.json();
 
   if (!response.ok || !data.success || !data.user) {
-    throw new Error(data.message || "Failed to get current user.");
-  }
+  const errorMessage =
+    data.message ||
+    (Array.isArray((data as any).errors)
+      ? (data as any).errors.join(" ")
+      : "Signup failed.");
+
+  throw new Error(errorMessage);
+}
 
   const user = mapUser(data.user);
 
