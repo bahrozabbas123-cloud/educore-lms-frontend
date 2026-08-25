@@ -116,81 +116,94 @@ export default function TeamLeadDashboard() {
           </h2>
 
           <div className="mt-5 space-y-5">
-            {submissions.map((submission) => (
-              <div
-                key={submission.id}
-                className="rounded-xl bg-white p-6 shadow"
-              >
-                <div className="flex flex-col justify-between gap-4 md:flex-row">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {submission.assignment}
-                    </h3>
+            {submissions.length === 0 ? (
+              <div className="rounded-xl bg-white p-8 text-center shadow">
+                <p className="text-lg font-medium text-gray-900">
+                  No submissions to review
+                </p>
 
-                    <p className="mt-2 text-gray-600">
-                      Student: {submission.student}
-                    </p>
+                <p className="mt-2 text-gray-600">
+                  Team submissions will appear here when students submit
+                  their work.
+                </p>
+              </div>
+            ) : (
+              submissions.map((submission) => (
+                <div
+                  key={submission.id}
+                  className="rounded-xl bg-white p-6 shadow"
+                >
+                  <div className="flex flex-col justify-between gap-4 md:flex-row">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {submission.assignment}
+                      </h3>
 
-                    <p className="mt-1 text-sm text-gray-500">
-                      Submitted: {submission.submittedAt}
-                    </p>
+                      <p className="mt-2 text-gray-600">
+                        Student: {submission.student}
+                      </p>
+
+                      <p className="mt-1 text-sm text-gray-500">
+                        Submitted: {submission.submittedAt}
+                      </p>
+                    </div>
+
+                    <span
+                      className={`h-fit rounded-full px-3 py-1 text-sm font-medium ${
+                        submission.status === "Approved"
+                          ? "bg-green-100 text-green-700"
+                          : submission.status === "Rejected"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {submission.status}
+                    </span>
                   </div>
 
-                  <span
-                    className={`h-fit rounded-full px-3 py-1 text-sm font-medium ${
-                      submission.status === "Approved"
-                        ? "bg-green-100 text-green-700"
-                        : submission.status === "Rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}
-                  >
-                    {submission.status}
-                  </span>
+                  {/* Feedback */}
+                  <div className="mt-5">
+                    <label className="mb-2 block font-medium text-gray-700">
+                      Feedback
+                    </label>
+
+                    <textarea
+                      value={feedback[submission.id] || ""}
+                      onChange={(event) =>
+                        setFeedback({
+                          ...feedback,
+                          [submission.id]: event.target.value,
+                        })
+                      }
+                      placeholder="Write feedback for the student..."
+                      rows={3}
+                      className="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    />
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-4 flex gap-3">
+                    <button
+                      onClick={() =>
+                        updateStatus(submission.id, "Approved")
+                      }
+                      className="rounded-lg bg-green-600 px-5 py-2 font-medium text-white hover:bg-green-700"
+                    >
+                      Approve
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateStatus(submission.id, "Rejected")
+                      }
+                      className="rounded-lg bg-red-600 px-5 py-2 font-medium text-white hover:bg-red-700"
+                    >
+                      Reject
+                    </button>
+                  </div>
                 </div>
-
-                {/* Feedback */}
-                <div className="mt-5">
-                  <label className="mb-2 block font-medium text-gray-700">
-                    Feedback
-                  </label>
-
-                  <textarea
-                    value={feedback[submission.id] || ""}
-                    onChange={(event) =>
-                      setFeedback({
-                        ...feedback,
-                        [submission.id]: event.target.value,
-                      })
-                    }
-                    placeholder="Write feedback for the student..."
-                    rows={3}
-                    className="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                  />
-                </div>
-
-                {/* Actions */}
-                <div className="mt-4 flex gap-3">
-                  <button
-                    onClick={() =>
-                      updateStatus(submission.id, "Approved")
-                    }
-                    className="rounded-lg bg-green-600 px-5 py-2 font-medium text-white hover:bg-green-700"
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      updateStatus(submission.id, "Rejected")
-                    }
-                    className="rounded-lg bg-red-600 px-5 py-2 font-medium text-white hover:bg-red-700"
-                  >
-                    Reject
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>
