@@ -1,21 +1,35 @@
+"use client";
+
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
+import { useEffect, useState } from "react";
 import Card, {
   CardHeader,
   CardTitle,
   CardDescription,
 } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-
-const summaryCards = [
-  { title: "Enrolled Courses", value: "—", badge: "Coming soon" as const },
-  { title: "Pending Assignments", value: "—", badge: "Coming soon" as const },
-  { title: "Certificates Earned", value: "—", badge: "Coming soon" as const },
-];
+import { getDashboard } from "@/services/api";
+import { ErrorState, LoadingState } from "@/components/shared/ResourceState";
 
 export default function DashboardPage() {
+  const [data, setData] = useState<{ enrolledCourses: number; pendingAssignments: number; certificatesEarned: number } | null>(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    getDashboard().then(setData).catch((err) => setError(err instanceof Error ? err.message : "Unable to load dashboard."));
+  }, []);
+
+  const summaryCards = data ? [
+    { title: "Enrolled Courses", value: data.enrolledCourses, badge: "Live" as const },
+    { title: "Pending Assignments", value: data.pendingAssignments, badge: "Live" as const },
+    { title: "Certificates Earned", value: data.certificatesEarned, badge: "Live" as const },
+  ] : [];
+
   return (
     <ProtectedRoute>
       <div className="flex flex-col gap-6">
+        {error && <ErrorState message={error} />}
+        {!data && !error && <LoadingState label="Loading your learning overview..." />}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {summaryCards.map((card) => (
             <Card key={card.title}>
@@ -33,12 +47,10 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <Card className="flex flex-col items-center justify-center gap-2 py-16 text-center">
-          <span className="text-3xl">📭</span>
-          <CardTitle>Nothing to show yet</CardTitle>
+        <Card className="flex flex-col justify-center gap-2 py-10">
+          <CardTitle>Your learning overview</CardTitle>
           <CardDescription>
-            This content area is a static shell. Course data, assignments, and
-            progress tracking will be connected in the coming weeks.
+            Keep an eye on upcoming work and return here as your course progress grows.
           </CardDescription>
         </Card>
       </div>

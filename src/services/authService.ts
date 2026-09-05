@@ -1,6 +1,7 @@
 import type { User } from "@/types";
+import { API_BASE_URL } from "@/lib/config";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = `${API_BASE_URL}/auth`;
 
 interface AuthResponse {
   success: boolean;
@@ -13,6 +14,7 @@ interface AuthResponse {
     role_id?: number;
   };
   message?: string;
+    errors?: string[];
 }
 
 function mapUser(user: NonNullable<AuthResponse["user"]>): User {
@@ -100,8 +102,8 @@ export async function getCurrentUser(): Promise<User> {
   if (!response.ok || !data.success || !data.user) {
   const errorMessage =
     data.message ||
-    (Array.isArray((data as any).errors)
-      ? (data as any).errors.join(" ")
+    (Array.isArray(data.errors)
+      ? data.errors.join(" ")
       : "Signup failed.");
 
   throw new Error(errorMessage);

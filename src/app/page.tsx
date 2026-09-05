@@ -12,8 +12,8 @@ export default function HomePage() {
         Welcome to <span className="gradient-text">EduCore LMS</span>
       </h1>
       <p className="max-w-md text-sm text-foreground/60">
-        A Learning Management System portal for students, instructors, and
-        team leads. This is a static Week 1 frontend build — no live data yet.
+        A connected Learning Management System portal for students, instructors,
+        and team leads.
       </p>
 
       <div className="flex gap-3">
@@ -24,7 +24,7 @@ export default function HomePage() {
           <Button variant="outline">Sign Up</Button>
         </Link>
         <Link href="/dashboard">
-          <Button variant="ghost">View Dashboard Shell</Button>
+          <Button variant="ghost">Open Dashboard</Button>
         </Link>
       </div>
     </main>

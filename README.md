@@ -32,6 +32,9 @@ npm install
 npm run dev
 ```
 
+For deployment, set `NEXT_PUBLIC_API_URL` to the backend API base URL. For
+local development, copy `.env.example` to `.env.local` and adjust it if needed.
+
 3. Open http://localhost:3000 in your browser.
 
 > The frontend communicates with the EduCore LMS backend API running locally on port `5000`.
@@ -45,7 +48,11 @@ npm run dev
 | `/signup`               | User registration    |
 | `/dashboard`            | Student dashboard    |
 | `/dashboard/instructor` | Instructor dashboard |
-| `/dashboard/team-lead`  | Team Lead dashboard  |
+| `/assignments` | Assignments and submissions |
+| `/dashboard/certificates` | Certificates |
+| `/dashboard/profile` | Profile editing |
+| `/dashboard/settings` | Theme and notification settings |
+| `/team-lead` | Team Lead user directory |
 
 ## Project Structure
 
@@ -118,6 +125,15 @@ Built as part of **Week 2 — Domain 3 of 5 (Frontend Development)** of the Flyc
 * [x] Authentication validation and error handling
 * [x] Dashboard authentication refresh fix
 * [x] Week 2 code review and cleanup
+
+## Week 3 and Week 4
+
+* [x] Notification bell with read/unread state
+* [x] Certificates, profile, and settings pages
+* [x] Dark mode persistence and responsive shell
+* [x] Centralized authenticated API client
+* [x] Vitest and React Testing Library coverage for login, dashboard cards, and submissions
+* [x] Production API URL configuration via `NEXT_PUBLIC_API_URL`
 
 ## Backend Integration
 

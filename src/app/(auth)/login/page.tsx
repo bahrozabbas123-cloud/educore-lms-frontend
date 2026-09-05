@@ -43,7 +43,13 @@ export default function LoginPage() {
 
       setUser(user);
 
-      router.push("/dashboard");
+      router.push(
+        user.role === "team_lead"
+          ? "/team-lead"
+          : user.role === "instructor"
+            ? "/dashboard/instructor"
+            : "/dashboard"
+      );
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Unable to log in."

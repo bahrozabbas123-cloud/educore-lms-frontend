@@ -19,3 +19,18 @@ export interface Assignment {
   dueDate: string;
   status: "pending" | "submitted" | "graded";
 }
+
+export interface Notification {
+  id: number;
+  message: string;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface Certificate {
+  id: number;
+  course_id: number | null;
+  course_title: string | null;
+  student_name: string;
+  issued_at: string;
+}
