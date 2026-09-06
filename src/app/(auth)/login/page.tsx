@@ -20,11 +20,13 @@ export default function LoginPage() {
   const { setUser } = useAuth();
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setSuccess("");
 
     const formData = new FormData(event.currentTarget);
 
@@ -42,14 +44,17 @@ export default function LoginPage() {
       const user = await login(email, password);
 
       setUser(user);
+      setSuccess("Login successful. Redirecting...");
 
-      router.push(
-        user.role === "team_lead"
-          ? "/team-lead"
-          : user.role === "instructor"
-            ? "/dashboard/instructor"
-            : "/dashboard"
-      );
+      window.setTimeout(() => {
+        router.push(
+          user.role === "team_lead"
+            ? "/team-lead"
+            : user.role === "instructor"
+              ? "/dashboard/instructor"
+              : "/dashboard"
+        );
+      }, 220);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Unable to log in."
@@ -61,7 +66,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4">
-      <Card className="w-full max-w-sm">
+      <Card className="page-enter w-full max-w-sm shadow-2xl shadow-brand-violet/10">
         <CardHeader>
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>
@@ -107,13 +112,19 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-red-500">
+            <p role="alert" className="feedback-enter text-sm text-red-500">
               {error}
             </p>
           )}
 
+          {success && (
+            <p role="status" className="feedback-enter text-sm text-emerald-400">
+              {success}
+            </p>
+          )}
+
           <Button type="submit" fullWidth disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
+            {loading ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />Logging in...</> : "Log In"}
           </Button>
         </form>
 

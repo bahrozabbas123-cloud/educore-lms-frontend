@@ -24,11 +24,12 @@ export default function TeamLeadDashboard() {
   return (
     <ProtectedRoute>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 p-4 sm:p-6">
-        <div>
+        <div className="page-enter">
           <p className="text-sm font-medium text-brand-cyan">Team administration</p>
           <h1 className="mt-2 font-heading text-3xl font-bold text-foreground">Team Lead Dashboard</h1>
           <p className="mt-2 text-sm text-foreground/60">View the current EduCore users and their assigned roles.</p>
         </div>
+        {!loading && !error && <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><Card><p className="text-sm text-foreground/50">Total members</p><p className="mt-2 font-heading text-3xl font-bold text-foreground">{users.length}</p></Card><Card><p className="text-sm text-foreground/50">Students</p><p className="mt-2 font-heading text-3xl font-bold text-foreground">{users.filter((user) => user.role === "Student").length}</p></Card><Card><p className="text-sm text-foreground/50">Instructors</p><p className="mt-2 font-heading text-3xl font-bold text-foreground">{users.filter((user) => user.role === "Instructor").length}</p></Card><Card><p className="text-sm text-foreground/50">Team leads</p><p className="mt-2 font-heading text-3xl font-bold text-foreground">{users.filter((user) => user.role === "Team Lead").length}</p></Card></div>}
         {loading && <LoadingState label="Loading team members..." />}
         {!loading && error && <ErrorState message={error} />}
         {!loading && !error && users.length === 0 && <EmptyState title="No team members found" description="Users will appear here once they register." />}

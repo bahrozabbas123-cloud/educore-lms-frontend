@@ -66,9 +66,9 @@ export default function NotificationBell() {
         aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ""}`}
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-foreground transition hover:bg-white/10"
+        className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-foreground transition hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-brand-violetLight/50"
       >
-        <span aria-hidden="true" className="text-base">♢</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
         {unreadCount > 0 && (
           <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-cyan px-1 text-[10px] font-bold text-slate-950">
             {unreadCount > 9 ? "9+" : unreadCount}

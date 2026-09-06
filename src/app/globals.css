@@ -17,6 +17,37 @@ body {
   background: var(--background);
 }
 
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes feedback-enter {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer components {
+  .page-enter {
+    animation: page-enter 420ms ease-out both;
+  }
+
+  .feedback-enter {
+    animation: feedback-enter 220ms ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -37,7 +37,7 @@ export default function Button({
     <button
       className={`
         inline-flex items-center justify-center gap-2 rounded-lg font-medium
-        transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50
+        transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0
         focus:outline-none focus:ring-2 focus:ring-brand-violetLight/50
         ${variantStyles[variant]}
         ${sizeStyles[size]}

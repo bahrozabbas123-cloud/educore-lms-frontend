@@ -18,11 +18,13 @@ export default function SignupPage() {
   const router = useRouter();
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setSuccess("");
 
     const formData = new FormData(event.currentTarget);
 
@@ -48,7 +50,8 @@ export default function SignupPage() {
 
       await signup(fullName, email, password);
 
-      router.push("/login");
+      setSuccess("Account created. Redirecting to login...");
+      window.setTimeout(() => router.push("/login"), 350);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Unable to create account."
@@ -60,7 +63,7 @@ export default function SignupPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-sm">
+      <Card className="page-enter w-full max-w-sm shadow-2xl shadow-brand-violet/10">
         <CardHeader>
           <CardTitle>Create your account</CardTitle>
           <CardDescription>
@@ -113,13 +116,19 @@ export default function SignupPage() {
           </label>
 
           {error && (
-            <p className="text-sm text-red-500">
+            <p role="alert" className="feedback-enter text-sm text-red-500">
               {error}
             </p>
           )}
 
+          {success && (
+            <p role="status" className="feedback-enter text-sm text-emerald-400">
+              {success}
+            </p>
+          )}
+
           <Button type="submit" fullWidth disabled={loading}>
-            {loading ? "Creating Account..." : "Create Account"}
+            {loading ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />Creating Account...</> : "Create Account"}
           </Button>
         </form>
 

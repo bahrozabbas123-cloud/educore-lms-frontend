@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import Card, { CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import { EmptyState, ErrorState, LoadingState } from "@/components/shared/ResourceState";
+import { ErrorState, LoadingState } from "@/components/shared/ResourceState";
 import { getCertificates } from "@/services/api";
 import type { Certificate } from "@/types";
 
@@ -23,15 +24,16 @@ export default function CertificatesPage() {
   return (
     <ProtectedRoute>
       <div className="flex flex-col gap-6">
-        <div>
+        <div className="page-enter">
           <p className="text-sm font-medium text-brand-cyan">Learning records</p>
           <h1 className="mt-2 font-heading text-3xl font-bold text-foreground">Certificates</h1>
           <p className="mt-2 max-w-2xl text-sm text-foreground/60">Your verified course completions, issued directly from EduCore.</p>
         </div>
+        {!loading && !error && <div className="grid gap-4 sm:grid-cols-2"><Card><p className="text-sm text-foreground/50">Certificates earned</p><p className="mt-2 font-heading text-3xl font-bold text-foreground">{certificates.length}</p></Card><Card><p className="text-sm text-foreground/50">Latest issue</p><p className="mt-2 font-heading text-xl font-semibold text-foreground">{certificates[0] ? new Date(certificates[0].issued_at).toLocaleDateString() : "Not yet"}</p></Card></div>}
         {loading && <LoadingState label="Loading your certificates..." />}
         {!loading && error && <ErrorState message={error} />}
         {!loading && !error && certificates.length === 0 && (
-          <EmptyState title="No certificates yet" description="Complete an enrolled course to see its certificate here." />
+          <Card className="text-center"><p className="font-heading text-lg font-semibold text-foreground">No certificates yet</p><p className="mt-2 text-sm text-foreground/60">Complete an enrolled course to see its certificate here.</p><Link href="/courses" className="mt-5 inline-flex text-sm font-medium text-brand-cyan transition-colors hover:text-brand-violetLight">View courses <span aria-hidden="true" className="ml-1">-&gt;</span></Link></Card>
         )}
         {!loading && !error && certificates.length > 0 && (
           <div className="grid gap-4 lg:grid-cols-2">

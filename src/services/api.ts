@@ -26,6 +26,18 @@ export interface Assignment {
   created_at: string;
 }
 
+export interface Course {
+  id: number;
+  title: string;
+  description: string | null;
+  instructor: string | null;
+  enrolled_at: string;
+  total_assignments: number;
+  completed_assignments: number;
+  progress: number;
+  status: "completed" | "in_progress" | "not_started";
+}
+
 interface ApiOptions extends RequestInit {
   auth?: boolean;
 }
@@ -65,6 +77,11 @@ export async function markAllNotificationsRead() {
 export async function getCertificates() {
   const data = await request<{ certificates: Certificate[] }>("/certificates");
   return data.certificates;
+}
+
+export async function getCourses() {
+  const data = await request<{ courses: Course[] }>("/courses");
+  return data.courses;
 }
 
 export async function updateProfile(fullName: string, email: string) {
