@@ -18,17 +18,17 @@ export default function Topbar() {
   }
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/[0.02] px-6">
-      <div className="min-w-0">
-        <h1 className="font-heading text-base font-semibold text-foreground">
+    <header className="flex min-h-16 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-white/[0.02] px-4 py-3 sm:px-6">
+      <div className="min-w-0 flex-1">
+        <h1 className="truncate font-heading text-sm font-semibold text-foreground sm:text-base">
           Welcome back, {userName}
         </h1>
-        <p className="text-xs text-foreground/50">
+        <p className="hidden text-xs text-foreground/50 sm:block">
           Here&apos;s what&apos;s happening with your courses today.
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
         <NotificationBell />
         <ThemeToggle />
 
@@ -36,7 +36,7 @@ export default function Topbar() {
 
         <button
           onClick={handleLogout}
-          className="rounded-lg border border-white/10 px-3 py-2 text-sm text-foreground/70 transition hover:bg-white/10 hover:text-foreground"
+          className="rounded-lg border border-white/10 px-2.5 py-2 text-xs text-foreground/70 transition hover:bg-white/10 hover:text-foreground sm:px-3 sm:text-sm"
         >
           Logout
         </button>

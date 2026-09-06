@@ -10,7 +10,7 @@ Built as part of **Week 1 and Week 2 — Domain 3 of 5 (Frontend Development)** 
 
 ## Tech Stack
 
-* [Next.js 14](https://nextjs.org/) (App Router) + TypeScript
+* [Next.js 16](https://nextjs.org/) (App Router) + TypeScript
 * [Tailwind CSS](https://tailwindcss.com/)
 * Node.js / Express backend API
 * JWT authentication
@@ -126,7 +126,7 @@ Built as part of **Week 2 — Domain 3 of 5 (Frontend Development)** of the Flyc
 * [x] Dashboard authentication refresh fix
 * [x] Week 2 code review and cleanup
 
-## Week 3 and Week 4
+## Week 3 and Week 4 Completion
 
 * [x] Notification bell with read/unread state
 * [x] Certificates, profile, and settings pages
@@ -134,6 +134,33 @@ Built as part of **Week 2 — Domain 3 of 5 (Frontend Development)** of the Flyc
 * [x] Centralized authenticated API client
 * [x] Vitest and React Testing Library coverage for login, dashboard cards, and submissions
 * [x] Production API URL configuration via `NEXT_PUBLIC_API_URL`
+* [x] Responsive QA across mobile, tablet, and desktop layouts
+* [x] Production build, lint, and test verification
+* [x] End-to-end authentication and protected-route QA
+
+### Production deployment
+
+1. Deploy the backend API and confirm its public URL, including the `/api` path.
+2. In the frontend hosting provider, set `NEXT_PUBLIC_API_URL` to that API URL, for example:
+
+```text
+NEXT_PUBLIC_API_URL=https://api.example.com/api
+```
+
+3. Configure the backend CORS policy to allow the deployed frontend origin.
+4. Run the frontend build and deploy the generated Next.js application:
+
+```bash
+npm ci
+npm run build
+npm run start
+```
+
+Do not commit `.env.local`, JWTs, passwords, database credentials, or other secrets. The public `NEXT_PUBLIC_API_URL` value is configuration, not a secret, but it must be set before the production build because Next.js exposes it to the browser.
+
+### Week 4 demo flow
+
+Use a real account from the backend, then verify login, dashboard routing, assignments, notifications, certificates, profile, settings, dark mode, and refresh persistence. Repeat at mobile, tablet, and desktop widths. See [DEMO.md](DEMO.md) for the full walkthrough.
 
 ## Backend Integration
 
@@ -176,7 +203,7 @@ The application:
 
 * `next/font/google` was intentionally not used for headings/body text to keep the build independent of a network connection; the font stack falls back gracefully to system fonts.
 * Authentication and dashboard functionality are connected to the backend API.
-* Some LMS content, such as courses and certificates, may still use placeholder data until their respective backend functionality is implemented.
+* LMS content is rendered from the backend API; empty API responses show explicit empty states rather than fabricated data.
 * The frontend backend API is expected to run locally on `http://localhost:5000`.
 
 ## Development Progress

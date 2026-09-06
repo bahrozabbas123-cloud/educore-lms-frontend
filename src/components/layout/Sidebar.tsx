@@ -12,7 +12,7 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="flex w-full shrink-0 overflow-x-auto border-b border-white/10 bg-white/[0.02] p-3 md:w-64 md:flex-col md:border-b-0 md:border-r md:p-4">
+    <aside className="flex w-full shrink-0 overflow-x-auto border-b border-white/10 bg-white/[0.02] p-3 md:w-64 md:flex-col md:overflow-visible md:border-b-0 md:border-r md:p-4">
       <div className="mb-0 flex shrink-0 items-center gap-2 px-2 md:mb-8">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-violet to-brand-cyan font-heading font-bold text-white">
           E
@@ -22,7 +22,7 @@ export default function Sidebar() {
         </span>
       </div>
 
-      <nav className="ml-4 flex flex-1 gap-1 md:ml-0 md:flex-col">
+      <nav className="ml-4 flex min-w-max flex-1 gap-1 md:ml-0 md:min-w-0 md:flex-col">
         {navItems.map((item) => (
           <Link
             key={item.label}
