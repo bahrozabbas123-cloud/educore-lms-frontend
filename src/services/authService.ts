@@ -14,7 +14,7 @@ interface AuthResponse {
     role_id?: number;
   };
   message?: string;
-    errors?: string[];
+  errors?: string[];
 }
 
 function mapUser(user: NonNullable<AuthResponse["user"]>): User {
@@ -34,6 +34,11 @@ function mapUser(user: NonNullable<AuthResponse["user"]>): User {
             : "student",
   };
 }
+
+function getAuthError(data: AuthResponse, fallback: string) {
+  return data.message || (data.errors?.length ? data.errors.join(" ") : fallback);
+}
+
 export async function login(
   email: string,
   password: string
@@ -49,13 +54,14 @@ export async function login(
   const data: AuthResponse = await response.json();
 
   if (!response.ok || !data.success || !data.user || !data.token) {
-    throw new Error(data.message || "Login failed.");
+    throw new Error(getAuthError(data, "Login failed."));
   }
 
+  const user = mapUser(data.user);
   localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(mapUser(data.user)));
+  localStorage.setItem("user", JSON.stringify(user));
 
-  return mapUser(data.user);
+  return user;
 }
 
 export async function signup(
@@ -78,7 +84,7 @@ export async function signup(
   const data: AuthResponse = await response.json();
 
   if (!response.ok || !data.success || !data.user) {
-    throw new Error(data.message || "Signup failed.");
+    throw new Error(getAuthError(data, "Signup failed."));
   }
 
   return mapUser(data.user);
@@ -100,14 +106,8 @@ export async function getCurrentUser(): Promise<User> {
   const data: AuthResponse = await response.json();
 
   if (!response.ok || !data.success || !data.user) {
-  const errorMessage =
-    data.message ||
-    (Array.isArray(data.errors)
-      ? data.errors.join(" ")
-      : "Signup failed.");
-
-  throw new Error(errorMessage);
-}
+    throw new Error(getAuthError(data, "Unable to restore your session."));
+  }
 
   const user = mapUser(data.user);
 
