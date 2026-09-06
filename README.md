@@ -2,7 +2,7 @@
 
 Frontend for **EduCore LMS**, a Learning Management System portal used by students, instructors, and team leads.
 
-Built as part of **Week 1 and Week 2 — Domain 3 of 5 (Frontend Development)** of the Flycon AI Internship Program.
+Built as part of **Weeks 1–4 — Domain 3 of 5 (Frontend Development)** of the Flycon AI Internship Program.
 
 > **Week 1 scope:** foundation, layout shell, static pages, and reusable UI components.
 >
@@ -126,17 +126,27 @@ Built as part of **Week 2 — Domain 3 of 5 (Frontend Development)** of the Flyc
 * [x] Dashboard authentication refresh fix
 * [x] Week 2 code review and cleanup
 
-## Week 3 and Week 4 Completion
+## Week 3 — Advanced LMS Features
 
-* [x] Notification bell with read/unread state
-* [x] Certificates, profile, and settings pages
-* [x] Dark mode persistence and responsive shell
-* [x] Centralized authenticated API client
-* [x] Vitest and React Testing Library coverage for login, dashboard cards, and submissions
-* [x] Production API URL configuration via `NEXT_PUBLIC_API_URL`
-* [x] Responsive QA across mobile, tablet, and desktop layouts
-* [x] Production build, lint, and test verification
-* [x] End-to-end authentication and protected-route QA
+* [x] Notifications with read/unread state
+* [x] Certificates page
+* [x] Profile and Settings
+* [x] Dark/Light mode
+* [x] Responsive design
+* [x] Backend/API integration
+* [x] Student, Instructor, and Team Lead role walkthrough
+* [x] Frontend testing and integration fixes
+
+## Week 4 — Testing, Optimization & Deployment
+
+* [x] Login, dashboard, and submission tests
+* [x] Responsive QA across mobile/tablet/desktop
+* [x] Performance optimization
+* [x] Bug fixing and final UI polish
+* [x] Production environment configuration
+* [x] Production build validation
+* [x] Deployment preparation
+* [x] Final demo/rehearsal
 
 ### Production deployment
 
@@ -216,6 +226,14 @@ Completed the initial frontend foundation, including project setup, reusable com
 
 Completed real authentication, backend integration, protected routing, role-based dashboards, assignment functionality, authentication persistence, and code review cleanup.
 
+### Week 3 — Advanced LMS Features
+
+Completed notifications, certificates, profile and settings workflows, theme support, responsive design, role walkthroughs, and frontend integration fixes.
+
+### Week 4 — Testing, Optimization & Deployment
+
+Completed responsive QA, performance-focused cleanup, bug fixing, UI polish, production configuration, build validation, deployment preparation, and final demo rehearsal. Deployment is prepared but not complete; no live frontend URL is currently published.
+
 ## Contributing
 
 1. Create a feature branch from `master`:
@@ -245,4 +263,4 @@ git push -u origin feature/day-x-task-name
 
 This project is being developed as part of the **Flycon AI Internship Program — Domain 3 of 5: Frontend Development**.
 
-Progress is organized by weekly development milestones, with Week 1 focusing on frontend foundations and Week 2 focusing on authentication, backend integration, protected routing, dashboards, and application functionality.
+Progress is organized by weekly development milestones, from frontend foundations in Week 1 through authentication, advanced LMS features, testing, optimization, and deployment preparation in Weeks 2–4.
