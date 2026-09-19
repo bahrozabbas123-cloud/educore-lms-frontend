@@ -1,3 +1,6 @@
+# EduCore LMS – Frontend
+
+🚀 **Live Demo:** https://educore-lms-frontend1.vercel.app
 # EduCore LMS Portal — Frontend
 
 Frontend for **EduCore LMS**, a Learning Management System portal used by students, instructors, and team leads.
